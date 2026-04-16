@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@700;800&family=Space+Grotesk:wght@700;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Space Grotesk", ui-monospace, SFMono-Regular, monospace;
+
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-secondary: var(--secondary);
+  --color-bg-app: var(--bg-app);
+  --color-surface: var(--surface);
+  --color-accent: var(--accent);
+  --color-text-main: var(--text-main);
+}
+
+:root {
+  /* Default: Vibrant Purple */
+  --primary: #6d28d9;
+  --primary-light: #8b5cf6;
+  --secondary: #db2777;
+  --bg-app: #f3f0ff;
+  --surface: #ffffff;
+  --accent: #f5d0fe;
+  --text-main: #1e1b4b;
+}
+
+[data-theme='ocean'] {
+  --primary: #0369a1;
+  --primary-light: #0ea5e9;
+  --secondary: #0891b2;
+  --bg-app: #f0f9ff;
+  --surface: #ffffff;
+  --accent: #bae6fd;
+  --text-main: #0c4a6e;
+}
+
+[data-theme='emerald'] {
+  --primary: #059669;
+  --primary-light: #10b981;
+  --secondary: #16a34a;
+  --bg-app: #f0fdf4;
+  --surface: #ffffff;
+  --accent: #d1fae5;
+  --text-main: #064e3b;
+}
+
+[data-theme='midnight'] {
+  --primary: #818cf8;
+  --primary-light: #a5b4fc;
+  --secondary: #f472b6;
+  --bg-app: #020617;
+  --surface: #0f172a;
+  --accent: #1e293b;
+  --text-main: #f8fafc;
+}
+
+[data-theme='sunset'] {
+  --primary: #f43f5e;
+  --primary-light: #fb7185;
+  --secondary: #f59e0b;
+  --bg-app: #fff1f2;
+  --surface: #ffffff;
+  --accent: #ffe4e6;
+  --text-main: #4c0519;
+}
+
+@layer base {
+  body {
+    @apply bg-bg-app text-text-main antialiased selection:bg-primary selection:text-white transition-colors duration-500 overflow-x-hidden;
+    color: var(--text-main);
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-primary/20 rounded-full hover:bg-primary/40;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-surface rounded-[3rem] p-10 border border-primary/5 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.08)] relative overflow-hidden transition-all duration-500;
+  }
+
+  [data-theme='midnight'] .card {
+    @apply bg-surface/50 backdrop-blur-2xl border-white/5 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.5)];
+  }
+
+  .card-title {
+    @apply flex items-center gap-4 text-3xl font-black text-primary mb-10 uppercase tracking-tighter;
+  }
+
+  .btn-primary {
+    @apply px-10 py-5 bg-primary text-white font-black rounded-3xl shadow-2xl shadow-primary/30 hover:scale-105 active:scale-95 transition-all uppercase tracking-widest text-sm flex items-center justify-center gap-3;
+  }
+
+  .nav-pill {
+    @apply px-6 py-4 rounded-[1.75rem] text-sm font-black transition-all duration-300 flex items-center gap-3;
+  }
+}
