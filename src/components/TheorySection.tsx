@@ -34,13 +34,13 @@ export default function TheorySection({ topic }: TheorySectionProps) {
         </ReactMarkdown>
       </div>
 
-      <div className="mt-12 p-8 bg-accent/20 border border-primary/10 rounded-[2.5rem] flex items-start gap-6 shadow-inner ring-1 ring-primary/5">
-        <div className="w-14 h-14 rounded-2xl bg-white flex items-center justify-center text-primary shadow-xl shrink-0">
-          <GraduationCap size={28} />
+      <div className="mt-8 sm:mt-12 p-6 sm:p-8 bg-accent/20 border border-primary/10 rounded-[2rem] sm:rounded-[2.5rem] flex flex-col sm:flex-row items-start gap-4 sm:gap-6 shadow-inner ring-1 ring-primary/5">
+        <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-white flex items-center justify-center text-primary shadow-xl shrink-0">
+          <GraduationCap className="w-6 h-6 sm:w-7 sm:h-7" />
         </div>
         <div>
-          <h3 className="text-primary font-black mb-2 text-xl tracking-tight">Назар аударыңыз!</h3>
-          <p className="text-base text-primary/80 leading-relaxed font-bold italic">
+          <h3 className="text-primary font-black mb-1 sm:mb-2 text-lg sm:text-xl tracking-tight">Назар аударыңыз!</h3>
+          <p className="text-sm sm:text-base text-primary/80 leading-relaxed font-bold italic">
             Физикалық заңдылықтарды түсіну үшін тек теорияны оқып қана қоймай, оны күнделікті өмірмен байланыстыра білу маңызды. Тәжірибе жасап көріңіз!
           </p>
         </div>

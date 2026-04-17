@@ -169,35 +169,37 @@ export default function App() {
       {/* Main Content */}
       <main className="flex-1 flex flex-col min-w-0 bg-bg-app transition-colors duration-500">
         {/* Header */}
-        <header className="px-10 pt-10 pb-6 flex flex-col xl:flex-row xl:items-end justify-between gap-8">
+        <header className="px-6 sm:px-10 pt-6 sm:pt-10 pb-6 flex flex-col xl:flex-row xl:items-end justify-between gap-6 sm:gap-8">
           <div className="max-w-3xl">
             {activeTab === 'tables' ? (
               <>
                 <div className="inline-block px-4 py-2 bg-amber-100/50 rounded-2xl text-[10px] font-black text-amber-600 mb-4 uppercase tracking-[3px]">Анықтамалық материал</div>
-                <h1 className="text-5xl font-black text-primary tracking-tight">Физикалық кестелер</h1>
+                <h1 className="text-3xl sm:text-5xl font-black text-primary tracking-tight">Физикалық кестелер</h1>
               </>
             ) : (
               <>
-                <div className="inline-block px-4 py-2 bg-accent/50 rounded-2xl text-[10px] font-black text-primary mb-4 uppercase tracking-[3px]">
+                <div className="inline-block px-4 py-2 bg-accent/50 rounded-2xl text-[10px] font-black text-primary mb-3 sm:mb-4 uppercase tracking-[3px]">
                   Тарау {PHYSICS_DATA.findIndex(c => c.id === selectedChapterId) + 1}: {selectedChapter.title}
                 </div>
-                <h1 className="text-5xl font-black text-primary tracking-tight leading-[1.05]">
+                <h1 className="text-3xl sm:text-5xl font-black text-primary tracking-tight leading-[1.1] sm:leading-[1.05]">
                   {selectedTopic.title}
                 </h1>
               </>
             )}
           </div>
           
-          <div className="flex bg-primary/10 p-2 rounded-[2rem] shadow-inner border border-primary/10 shrink-0">
-            <TabButton active={activeTab === 'theory'} onClick={() => setActiveTab('theory')} icon={<BookOpen size={18} />} label="Теория" />
-            <TabButton active={activeTab === 'video'} onClick={() => setActiveTab('video')} icon={<Youtube size={18} />} label="Видео" />
-            <TabButton active={activeTab === 'practice'} onClick={() => setActiveTab('practice')} icon={<PenTool size={18} />} label="Есептер" />
-            <TabButton active={activeTab === 'quiz'} onClick={() => setActiveTab('quiz')} icon={<ClipboardCheck size={18} />} label="Тест" />
+          <div className="flex bg-primary/10 p-1.5 rounded-[2rem] shadow-inner border border-primary/10 shrink-0 overflow-x-auto no-scrollbar max-w-full">
+            <div className="flex min-w-max gap-1">
+              <TabButton active={activeTab === 'theory'} onClick={() => setActiveTab('theory')} icon={<BookOpen size={18} />} label="Теория" />
+              <TabButton active={activeTab === 'video'} onClick={() => setActiveTab('video')} icon={<Youtube size={18} />} label="Видео" />
+              <TabButton active={activeTab === 'practice'} onClick={() => setActiveTab('practice')} icon={<PenTool size={18} />} label="Есептер" />
+              <TabButton active={activeTab === 'quiz'} onClick={() => setActiveTab('quiz')} icon={<ClipboardCheck size={18} />} label="Тест" />
+            </div>
           </div>
         </header>
 
         {/* Content Area */}
-        <div className="flex-1 overflow-y-auto custom-scrollbar px-10 pb-16">
+        <div className="flex-1 overflow-y-auto custom-scrollbar px-6 sm:px-10 pb-16">
           <div className="max-w-5xl mx-auto">
             <AnimatePresence mode="wait">
               <motion.div

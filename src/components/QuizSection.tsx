@@ -49,25 +49,25 @@ export default function QuizSection({ topic }: QuizSectionProps) {
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="card flex flex-col items-center justify-center py-20 text-center space-y-8"
+        className="card flex flex-col items-center justify-center py-12 sm:py-20 text-center space-y-6 sm:space-y-8"
       >
-        <div className="w-24 h-24 bg-primary/10 text-primary rounded-[2.5rem] flex items-center justify-center shadow-inner relative overflow-hidden group">
-          <Trophy size={48} className="relative z-10" />
+        <div className="w-20 h-20 sm:w-24 sm:h-24 bg-primary/10 text-primary rounded-[2.25rem] sm:rounded-[2.5rem] flex items-center justify-center shadow-inner relative overflow-hidden group">
+          <Trophy className="w-10 h-10 sm:w-12 sm:h-12 relative z-10" />
           <motion.div 
             animate={{ scale: [1, 1.2, 1], rotate: [0, 10, 0] }}
             transition={{ duration: 4, repeat: Infinity }}
             className="absolute inset-0 bg-primary/5 rounded-full"
           />
         </div>
-        <div className="space-y-3">
-          <h2 className="text-3xl font-black text-primary uppercase tracking-widest">Білімді тексеру</h2>
-          <p className="text-slate-500 max-w-sm mx-auto font-bold text-lg">
+        <div className="space-y-2 sm:space-y-3 px-4">
+          <h2 className="text-2xl sm:text-3xl font-black text-primary uppercase tracking-widest">Білімді тексеру</h2>
+          <p className="text-slate-500 max-w-sm mx-auto font-bold text-base sm:text-lg">
             Осы тақырып бойынша {questions.length} сұрақтан тұратын тестті тапсырып көріңіз.
           </p>
         </div>
         <button
           onClick={handleStart}
-          className="btn-primary"
+          className="btn-primary w-full sm:w-auto"
         >
           Тестті бастау
         </button>
@@ -81,12 +81,12 @@ export default function QuizSection({ topic }: QuizSectionProps) {
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="card flex flex-col items-center justify-center py-20 text-center space-y-10"
+        className="card flex flex-col items-center justify-center py-12 sm:py-20 text-center space-y-8 sm:space-y-10"
       >
         <div className="relative">
-          <svg className="w-40 h-40 transform -rotate-90">
+          <svg className="w-32 h-32 sm:w-40 sm:h-40 transform -rotate-90">
             <circle
-              cx="80"
+              cx={percentage ? (percentage >= 100 ? "80" : "80") : "80"}
               cy="80"
               r="74"
               fill="transparent"
@@ -148,98 +148,99 @@ export default function QuizSection({ topic }: QuizSectionProps) {
         <span>Тақырып бойынша тест</span>
       </h2>
 
-      <div className="mt-10 space-y-10">
-        <div className="space-y-8">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <span className="px-4 py-2 bg-primary/10 text-primary rounded-2xl text-[11px] font-black uppercase tracking-[2px]">
-                Сұрақ {currentIndex + 1}
-              </span>
-              <div className="w-1 h-1 rounded-full bg-slate-200"></div>
-              <span className="text-slate-400 text-xs font-black uppercase tracking-widest">Барлығы: {questions.length}</span>
+        <div className="space-y-4 sm:space-y-10">
+          <div className="space-y-6 sm:space-y-8">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <span className="px-3 py-1.5 sm:px-4 sm:py-2 bg-primary/10 text-primary rounded-xl sm:rounded-2xl text-[10px] sm:text-[11px] font-black uppercase tracking-[2px]">
+                  Сұрақ {currentIndex + 1}
+                </span>
+                <div className="w-1 h-1 rounded-full bg-slate-200"></div>
+                <span className="text-slate-400 text-[10px] sm:text-xs font-black uppercase tracking-widest">Барлығы: {questions.length}</span>
+              </div>
+            </div>
+            
+            <p className="font-black text-slate-800 text-xl sm:text-2xl leading-[1.3] text-balance">
+              {currentQuestion.question}
+            </p>
+
+            <div className="grid gap-3 sm:gap-4">
+              {currentQuestion.options.map((option, index) => {
+                let state = 'default';
+                if (isAnswered) {
+                  if (index === currentQuestion.correctAnswer) state = 'correct';
+                  else if (index === selectedOption) state = 'incorrect';
+                  else state = 'muted';
+                } else if (index === selectedOption) {
+                  state = 'selected';
+                }
+
+                return (
+                  <button
+                    key={index}
+                    onClick={() => handleOptionClick(index)}
+                    disabled={isAnswered}
+                    className={`flex items-center gap-4 sm:gap-6 text-left p-4 sm:p-6 rounded-[1.50rem] sm:rounded-[2rem] transition-all duration-300 border-2 ${
+                      state === 'default' ? 'border-slate-100 bg-white hover:border-primary/30 sm:hover:translate-x-2' :
+                      state === 'selected' ? 'border-primary bg-primary/5 ring-4 sm:ring-8 ring-primary/5 sm:translate-x-3' :
+                      state === 'correct' ? 'border-emerald-500 bg-emerald-50 text-emerald-900 ring-4 sm:ring-8 ring-emerald-50 sm:translate-x-3' :
+                      state === 'incorrect' ? 'border-rose-500 bg-rose-50 text-rose-900 ring-4 sm:ring-8 ring-rose-50' :
+                      'opacity-30 border-slate-50 scale-95'
+                    }`}
+                  >
+                    <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-[1rem] sm:rounded-[1.25rem] flex items-center justify-center font-black text-base sm:text-lg border-2 shrink-0 transition-colors ${
+                      state === 'correct' ? 'bg-emerald-500 border-emerald-500 text-white' :
+                      state === 'incorrect' ? 'bg-rose-500 border-rose-500 text-white' :
+                      state === 'selected' ? 'bg-primary border-primary text-white' :
+                      'bg-white border-slate-100 group-hover:border-primary/50 text-slate-400'
+                    }`}>
+                      {String.fromCharCode(65 + index)}
+                    </div>
+                    <span className="font-black text-base sm:text-lg tracking-tight leading-tight">{option}</span>
+                    
+                    <div className="ml-auto">
+                      {state === 'correct' && <CheckCircle2 className="text-emerald-500" size={24} />}
+                      {state === 'incorrect' && <XCircle className="text-rose-500" size={24} />}
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           </div>
-          
-          <p className="font-black text-slate-800 text-2xl leading-[1.3] text-balance">
-            {currentQuestion.question}
-          </p>
 
-          <div className="grid gap-4">
-            {currentQuestion.options.map((option, index) => {
-              let state = 'default';
-              if (isAnswered) {
-                if (index === currentQuestion.correctAnswer) state = 'correct';
-                else if (index === selectedOption) state = 'incorrect';
-                else state = 'muted';
-              } else if (index === selectedOption) {
-                state = 'selected';
-              }
-
-              return (
-                <button
-                  key={index}
-                  onClick={() => handleOptionClick(index)}
-                  disabled={isAnswered}
-                  className={`flex items-center gap-6 text-left p-6 rounded-[2rem] transition-all duration-300 border-2 ${
-                    state === 'default' ? 'border-slate-100 bg-white hover:border-primary/30 hover:shadow-xl hover:translate-x-2' :
-                    state === 'selected' ? 'border-primary bg-primary/5 ring-8 ring-primary/5 translate-x-3' :
-                    state === 'correct' ? 'border-emerald-500 bg-emerald-50 text-emerald-900 ring-8 ring-emerald-50 translate-x-3' :
-                    state === 'incorrect' ? 'border-rose-500 bg-rose-50 text-rose-900 ring-8 ring-rose-50' :
-                    'opacity-30 border-slate-50 scale-95'
-                  }`}
-                >
-                  <div className={`w-12 h-12 rounded-[1.25rem] flex items-center justify-center font-black text-lg border-2 shrink-0 transition-colors ${
-                    state === 'correct' ? 'bg-emerald-500 border-emerald-500 text-white' :
-                    state === 'incorrect' ? 'bg-rose-500 border-rose-500 text-white' :
-                    state === 'selected' ? 'bg-primary border-primary text-white' :
-                    'bg-white border-slate-100 group-hover:border-primary/50 text-slate-400'
-                  }`}>
-                    {String.fromCharCode(65 + index)}
-                  </div>
-                  <span className="font-black text-lg tracking-tight leading-tight">{option}</span>
-                  
-                  <div className="ml-auto">
-                    {state === 'correct' && <CheckCircle2 className="text-emerald-500" size={28} />}
-                    {state === 'incorrect' && <XCircle className="text-rose-500" size={28} />}
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="pt-10 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="w-full sm:max-w-xs flex items-center gap-5">
-            <div className="flex-1 bg-slate-100 h-3 rounded-full overflow-hidden shadow-inner">
-               <motion.div 
-                className="h-full bg-primary"
-                initial={{ width: 0 }}
-                animate={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
-                transition={{ type: "spring", stiffness: 50 }}
-              />
+          <div className="pt-6 sm:pt-10 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div className="w-full sm:max-w-xs flex items-center gap-4 sm:gap-5">
+              <div className="flex-1 bg-slate-100 h-2.5 sm:h-3 rounded-full overflow-hidden shadow-inner">
+                 <motion.div 
+                  className="h-full bg-primary"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
+                  transition={{ type: "spring", stiffness: 50 }}
+                />
+              </div>
+              <span className="text-[10px] sm:text-[11px] font-black text-primary uppercase tracking-widest leading-none">{Math.round(((currentIndex + 1) / questions.length) * 100)}%</span>
             </div>
-            <span className="text-[11px] font-black text-primary uppercase tracking-widest">{Math.round(((currentIndex + 1) / questions.length) * 100)}%</span>
-          </div>
 
-          <AnimatePresence>
-            {isAnswered && (
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-              >
-                <button
-                  onClick={handleNext}
-                  className="flex items-center gap-3 bg-primary text-white px-10 py-5 rounded-[1.75rem] font-black hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-primary/20 uppercase tracking-widest text-sm"
+            <AnimatePresence>
+              {isAnswered && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  className="w-full sm:w-auto"
                 >
-                  <span>{currentIndex === questions.length - 1 ? 'Нәтиже' : 'Келесі'}</span>
-                  <ArrowRight size={20} />
-                </button>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                  <button
+                    onClick={handleNext}
+                    className="w-full sm:w-auto flex items-center justify-center gap-3 bg-primary text-white px-8 py-4 sm:px-10 sm:py-5 rounded-[1.5rem] sm:rounded-[1.75rem] font-black hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-primary/20 uppercase tracking-widest text-xs sm:text-sm"
+                  >
+                    <span>{currentIndex === questions.length - 1 ? 'Нәтиже' : 'Келесі'}</span>
+                    <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
-      </div>
     </motion.section>
   );
 }

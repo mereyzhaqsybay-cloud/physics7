@@ -107,8 +107,8 @@ export default function TablesSection() {
             <span>{table.title}</span>
           </h2>
           
-          <div className="mt-6 border border-primary/10 rounded-[2rem] overflow-hidden shadow-sm bg-white">
-            <table className="w-full text-left border-collapse">
+          <div className="mt-6 border border-primary/10 rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden shadow-sm bg-white overflow-x-auto no-scrollbar">
+            <table className="w-full text-left border-collapse min-w-[500px] sm:min-w-0">
               <thead>
                 <tr className="bg-primary/5">
                   <th className="px-8 py-5 text-sm font-black text-primary uppercase tracking-widest border-b border-primary/10">Атауы</th>
